@@ -233,14 +233,14 @@
 (ad-activate 'flymake-post-syntax-check)
 
 ;; http://www.erlang.org/doc/apps/tools/erlang_mode_chapter.html
-(add-to-list 'load-path "/usr/local/Cellar/erlang/R15B/lib/erlang/lib/tools-2.6.6.6/emacs")
-(setq erlang-root-dir "/usr/local/Cellar/erlang/R15B/lib/erlang")
-(setq exec-path (cons "/usr/local/Cellar/erlang/R15B/lib/erlang/bin" exec-path))
-(require 'erlang-start)
+;; (add-to-list 'load-path "/usr/local/Cellar/erlang/R15B/lib/erlang/lib/tools-2.6.6.6/emacs")
+;; (setq erlang-root-dir "/usr/local/Cellar/erlang/R15B/lib/erlang")
+;; (setq exec-path (cons "/usr/local/Cellar/erlang/R15B/lib/erlang/bin" exec-path))
+;; (require 'erlang-start)
 
 ;; https://github.com/secondplanet/elixir-mode
-(add-to-list 'load-path "~/.emacs.d/elixir-mode")
-(require 'elixir-mode)
+;; (add-to-list 'load-path "~/.emacs.d/elixir-mode")
+;; (require 'elixir-mode)
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
