@@ -10,21 +10,21 @@
 
 
 (dolist (hook (list
-	      'c-mode-hook
-	      'emacs-lisp-mode-hook
-	      'lisp-interaction-mode-hook
-	      'lisp-mode-hook
-	      'java-mode-hook
-	      'sh-mode-hook
-	      'ruby-mode-hook
-	      'js-mode-hook
-	      'js2-mode-hook
-	      'coffee-mode-hook
-	      'd-mode-hook
-	      'html-mode-hook
-	      'haml-mode-hook
-	      'css-mode-hook
-	      ))
+	'c-mode-hook
+	'emacs-lisp-mode-hook
+	'lisp-interaction-mode-hook
+	'lisp-mode-hook
+	'java-mode-hook
+	'sh-mode-hook
+	'ruby-mode-hook
+	'js-mode-hook
+	'js2-mode-hook
+	'coffee-mode-hook
+	'd-mode-hook
+	'html-mode-hook
+	'haml-mode-hook
+	'css-mode-hook
+	))
 (add-hook hook (lambda () (linum-mode t))))
 
 ;; 言語設定とか
@@ -115,27 +115,27 @@
 (require 'rsense)
 ;; C-c .で補完
 (add-hook 'ruby-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c .") 'ac-complete-rsense)))
+    (lambda ()
+      (local-set-key (kbd "C-c .") 'ac-complete-rsense)))
 ;; 自動補完～～
 (add-hook 'ruby-mode-hook
-	  (lambda ()
-	    (add-to-list 'ac-sources 'ac-source-rsense-method)
-	    (add-to-list 'ac-sources 'ac-source-rsense-constant)))
+    (lambda ()
+      (add-to-list 'ac-sources 'ac-source-rsense-method)
+      (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 (setq ruby-deep-indent-paren-style nil)
 
 ;; http://willnet.in/13
 (defadvice ruby-indent-line (after unindent-closing-paren activate)
   (let ((column (current-column))
-	indent offset)
+  indent offset)
     (save-excursion
       (back-to-indentation)
       (let ((state (syntax-ppss)))
-	(setq offset (- column (current-column)))
-	(when (and (eq (char-after) ?\))
-		   (not (zerop (car state))))
-	  (goto-char (cadr state))
-	  (setq indent (current-indentation)))))
+  (setq offset (- column (current-column)))
+  (when (and (eq (char-after) ?\))
+       (not (zerop (car state))))
+    (goto-char (cadr state))
+    (setq indent (current-indentation)))))
     (when indent
       (indent-line-to indent)
       (when (> offset 0) (forward-char offset)))))
@@ -144,10 +144,10 @@
 (require 'flymake-ruby)
 (defun flymake-ruby-init ()
   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
-	 (local-file  (file-relative-name
-		       temp-file
-		       (file-name-directory buffer-file-name))))
+	   'flymake-create-temp-inplace))
+   (local-file  (file-relative-name
+	   temp-file
+	   (file-name-directory buffer-file-name))))
     (list "/Users/ukondo/.rvm/bin/ruby" (list "-c" local-file))))
 (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
 (push '("(Rake|Cap|Gem)file$" flymake-ruby-init) flymake-allowed-file-name-masks)
@@ -165,18 +165,18 @@
   "Displays the error/warning for the current line in the minibuffer"
   (interactive)
   (let* ((line-no             (flymake-current-line-no))
-	 (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no)))
-	 (count               (length line-err-info-list))
-	 )
+   (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no)))
+   (count               (length line-err-info-list))
+   )
     (while (> count 0)
       (when line-err-info-list
-	(let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
-	       (full-file  (flymake-ler-full-file (nth (1- count) line-err-info-list)))
-	       (text (flymake-ler-text (nth (1- count) line-err-info-list)))
-	       (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
-	  (message "[%s] %s" line text)
-	  )
-	)
+  (let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
+	 (full-file  (flymake-ler-full-file (nth (1- count) line-err-info-list)))
+	 (text (flymake-ler-text (nth (1- count) line-err-info-list)))
+	 (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
+    (message "[%s] %s" line text)
+    )
+  )
       (setq count (1- count)))))
 
 ;;(require 'rcodetools)
@@ -238,6 +238,7 @@
 ;; (setq exec-path (cons "/usr/local/Cellar/erlang/R15B/lib/erlang/bin" exec-path))
 ;; (require 'erlang-start)
 
+
 ;; https://github.com/secondplanet/elixir-mode
 ;; (add-to-list 'load-path "~/.emacs.d/elixir-mode")
 ;; (require 'elixir-mode)
@@ -259,17 +260,26 @@
 (set-language-environment 'utf-8)
 (prefer-coding-system 'utf-8)
 
+
+;; Go mode hook
+(add-hook 'go-mode-hook
+  '(lambda ()
+     (setq tab-width 8)
+     (setq indent-tabs-mode t)
+     ))
+
+
 ;; http://subtech.g.hatena.ne.jp/antipop/20071016/1192546147
 (setq truncate-partial-width-windows nil)
 
 (dolist (hook (list
-	      'c-mode-hook
-	      'emacs-lisp-mode-hook
-	      'lisp-interaction-mode-hook
-	      'lisp-mode-hook
-	      'java-mode-hook
-	      'sh-mode-hook
-	      ))
+	'c-mode-hook
+	'emacs-lisp-mode-hook
+	'lisp-interaction-mode-hook
+	'lisp-mode-hook
+	'java-mode-hook
+	'sh-mode-hook
+	))
 (add-hook hook (lambda () (linum-mode t))))
 
 (powerline-default)
@@ -290,3 +300,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(setq-default tab-width 2 indent-tabs-mode nil)
